@@ -24,7 +24,6 @@ import {
 import { Header } from "@/components/header";
 import { useToast } from "@/hooks/use-toast";
 import { AptosConnectButton } from "@razorlabs/wallet-kit";
-
 const DID_TYPES = [
   { value: "0", label: "Human" },
   { value: "1", label: "Organization" },
@@ -74,6 +73,8 @@ const TITLE_STYLES = [
 ];
 
 export default function Home() {
+
+
   const { account, connected, signAndSubmitTransaction } = useAptosWallet();
   const [didType, setDidType] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -96,6 +97,15 @@ export default function Home() {
     const params = new URLSearchParams(window.location.search);
     const addrParam = params.get('addr');
     setAddress(addrParam);
+  }, []);
+
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const descParam = params.get('description');
+    if (descParam) {
+      setDescription(descParam);
+    }
   }, []);
 
   useEffect(() => {
@@ -132,14 +142,14 @@ export default function Home() {
 
   const getType = async (address: string): Promise<number | null> => {
     if (!address) return null;
-    
+
     try {
       const payload: InputViewFunctionData = {
         function: `${MODULE_ADDRESS}::addr_aggregator::get_type`,
         typeArguments: [],
         functionArguments: [address],
       };
-      
+
       const response = await client.view({ payload });
       return Number(response[0]);
     } catch (error) {
@@ -150,14 +160,14 @@ export default function Home() {
 
   const getDescription = async (address: string): Promise<string | null> => {
     if (!address) return null;
-    
+
     try {
       const payload: InputViewFunctionData = {
         function: `${MODULE_ADDRESS}::addr_aggregator::get_description`,
         typeArguments: [],
         functionArguments: [address],
       };
-      
+
       const response = await client.view({ payload });
       return response[0] as string;
     } catch (error) {
@@ -196,13 +206,13 @@ export default function Home() {
 
       const response = await signAndSubmitTransaction({ payload }) as unknown as { hash: string };
       console.log("Transaction hash:", response);
-      
+
       try {
         const pendingTransaction = await client.waitForTransaction({
-          transactionHash: response.hash ,
+          transactionHash: response.hash,
         });
         console.log("Transaction confirmed:", pendingTransaction);
-        
+
         await fetchDidInfo(account.address);
         success({
           title: "DID created successfully!",
@@ -237,11 +247,35 @@ export default function Home() {
           {/* Enhanced Hero Section */}
           <div className="text-center mb-16">
             <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-[var(--pixel-primary)] via-[var(--pixel-accent)] to-[var(--pixel-success)] bg-clip-text text-transparent">
-              Your Digital Identity on Movement
+              Your Digital Identity on Movement Powered by MoveDIDBooster
             </h1>
             <p className="text-xl text-[var(--pixel-text-secondary)] mb-8 max-w-2xl mx-auto">
               Create and manage your decentralized identity in a few simple steps
             </p>
+            {description && !didInfo && (
+              <>
+                <p className="text-xl text-[var(--pixel-text-secondary)] mb-4 max-w-2xl mx-auto">
+                  {`Welcome, ${description}! You're about to create your MoveDID tied to your Twitter identity.`}
+                </p>
+                <div className="bg-[var(--pixel-surface)] p-6 rounded-xl max-w-2xl mx-auto">
+                  <h3 className="text-lg font-semibold mb-4 text-[var(--pixel-accent)]">Quick Guide to Creating Your DID</h3>
+                  <ol className="text-left space-y-3 text-[var(--pixel-text-secondary)]">
+                    <li className="flex items-start gap-2">
+                      <span className="font-bold text-[var(--pixel-primary)]">1.</span>
+                      <span>Choose your DID type (Human, Organization, AI Agent, or Smart Contract)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="font-bold text-[var(--pixel-primary)]">2.</span>
+                      <span>Your Twitter username is pre-filled as your DID description</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="font-bold text-[var(--pixel-primary)]">3.</span>
+                      <span>Connect your wallet and confirm the transaction to create your DID</span>
+                    </li>
+                  </ol>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Enhanced Loading State */}
@@ -281,7 +315,7 @@ export default function Home() {
                   Connect your wallet to create and manage your digital identity
                 </p>
                 <div className="inline-block">
-                  <AptosConnectButton 
+                  <AptosConnectButton
                     className="px-8 py-4 text-lg font-semibold rounded-xl bg-gradient-to-r from-[var(--pixel-primary)] to-[var(--pixel-accent)] text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                   />
                 </div>
@@ -308,8 +342,8 @@ export default function Home() {
                     </SelectTrigger>
                     <SelectContent className="bg-[var(--pixel-card)] border-2 border-[var(--pixel-surface)]">
                       {DID_TYPES.map((type) => (
-                        <SelectItem 
-                          key={type.value} 
+                        <SelectItem
+                          key={type.value}
                           value={type.value}
                           className="hover:bg-[var(--pixel-surface)] cursor-pointer py-3"
                         >
@@ -328,7 +362,9 @@ export default function Home() {
                     placeholder="Tell us about yourself or your organization"
                     className="h-12 text-base bg-[var(--pixel-surface)] border-2 border-[var(--pixel-text-muted)] hover:border-[var(--pixel-accent)] transition-all duration-300"
                     value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    // onChange={(e) => setDescription(e.target.value)}
+                    defaultValue={description}
+                    disabled
                   />
                 </div>
 
