@@ -242,17 +242,6 @@ export default function Home() {
             <p className="text-xl text-[var(--pixel-text-secondary)] mb-8 max-w-2xl mx-auto">
               Create and manage your decentralized identity in a few simple steps
             </p>
-            <div className="flex items-center justify-center gap-6">
-              <a
-                href="https://x.com/intent/follow?screen_name=root_mud"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[var(--pixel-surface)] hover:bg-[var(--pixel-surface)/80] transition-all duration-300"
-              >
-                <span className="text-[var(--pixel-text-primary)]">Follow us on X</span>
-                <svg className="w-5 h-5" /* Add X/Twitter icon SVG here */ />
-              </a>
-            </div>
           </div>
 
           {/* Enhanced Loading State */}
