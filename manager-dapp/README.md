@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MoveDIDBooster UI
 
-## Getting Started
+This is the **DID Activation Portal** for the MoveDIDBooster project, a customized interface that lets users create their MoveDID tied to their Twitter username. Forked from the official MoveDID UI ([did.rootmud.xyz](https://did.rootmud.xyz/)), this repo enhances the experience with pre-filled Twitter usernames, branded elements, and clear guidelines for the Movement Network community.
 
-First, run the development server:
+## Project Overview
+The MoveDIDBooster UI is the on-chain counterpart to the MoveDIDBooster Twitter agent. When users arrive via a link from the agent (e.g., `https://movedidbooster.vercel.app/?description=@UserX`), they’re greeted with a personalized interface to create their decentralized identity (DID) on the Movement testnet. It’s simple, user-friendly, and powered by MoveDIDBooster’s community spirit.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Workflow
+1. **User Redirect**: Users land on the portal via a link from MoveDIDBooster, e.g., `https://movedidbooster.vercel.app/?description=@UserX`.
+2. **Personalized Welcome**: Displays a message like "Welcome, @UserX! Let’s create your MoveDID."
+3. **Pre-Filled Description**: The description field is automatically filled with the user’s Twitter username (e.g., `@UserX`).
+4. **Guidelines**: Clear instructions guide the user:
+   - "Step 1: Choose your DID type (Human, Organization, AI Agent, Smart Contract)."
+   - "Step 2: Review your description (pre-filled with your Twitter username—edit if you’d like!)."
+   - "Step 3: Connect your Movement wallet and sign the transaction."
+5. **DID Creation**: Users select a DID type, confirm their description, connect their wallet, and sign to create their MoveDID.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## UI Features
+- **Personalized Welcome**: Greets users with their Twitter username (e.g., “Welcome, @UserX!”).
+- **Pre-Filled Description**: Automatically populates the description field with the username from the URL.
+- **Guidelines**: Step-by-step instructions ensure a smooth DID creation process.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Setup
+1. **Clone the Repo**: `git clone https://github.com/thopatevijay/MoveDID.git`
+2. **Install Dependencies**: `npm install`
+4. **Run Locally**: `npm run dev`
+5. **Deploy**: Deployed on Vercel at [https://movedidbooster.vercel.app/](https://movedidbooster.vercel.app/).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Customization Details
+- **Forked Base**: Built from the MoveDID UI codebase, customized for MoveDIDBooster.
+- **URL Parsing**: Extracts `description` from the query string to pre-fill the description field.
+- **Branding**: Added “Powered by MoveDIDBooster” text and styling to reflect the agent’s identity.
+- **User Experience**: Simplified layout with Movement-themed visuals and clear guidance.
 
-## Learn More
+## Integration with MoveDIDBooster
+- **Main Repo**: [MoveDIDBooster](https://github.com/thopatevijay/MoveDIDBooster)
+- **Workflow Connection**: The UI receives users from the Twitter agent and completes the on-chain DID creation process, tying their Twitter username to their Movement identity.
 
-To learn more about Next.js, take a look at the following resources:
+## Future Enhancements
+- **Twitter Sharing**: Add a post-creation prompt with a pre-written tweet (e.g., “Just created my DID with @MoveDIDBooster—#mAInia”).
+- **Dynamic Hype**: Display a personalized message based on DID type (e.g., “You’re a Human Movement star, @UserX!”).
+- **Streamlined Signing**: Integrate wallet deep links for faster transaction signing.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built with ❤️ for the Movement mAInia Hackathon, Feb 2025.
